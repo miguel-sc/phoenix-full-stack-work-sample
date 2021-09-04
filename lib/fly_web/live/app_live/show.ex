@@ -70,4 +70,11 @@ defmodule FlyWeb.AppLive.Show do
   def preview_url(app) do
     "https://#{app["name"]}.fly.dev"
   end
+
+  def health_checks(allocation) do
+    ["total", "passing", "warning", "critical"]
+    |> Enum.filter(fn stat -> allocation["#{stat}CheckCount"] != 0 end)
+    |> Enum.map(fn stat -> "#{allocation["#{stat}CheckCount"]} #{stat}" end)
+    |> Enum.join(", ")
+  end
 end
