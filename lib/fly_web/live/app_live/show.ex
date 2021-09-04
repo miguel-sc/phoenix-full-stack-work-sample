@@ -87,4 +87,10 @@ defmodule FlyWeb.AppLive.Show do
     |> Enum.map(fn stat -> "#{allocation["#{stat}CheckCount"]} #{stat}" end)
     |> Enum.join(", ")
   end
+
+  def formatted_date(date_str) do
+    date_str
+    |> Timex.parse!("{ISO:Extended}")
+    |> Timex.format!("{relative}", :relative)
+  end
 end
