@@ -219,20 +219,20 @@ defmodule Fly.Client do
             placedCount
             healthyCount
             unhealthyCount
-            allocations {
-              id
-              region
-              taskName
-              version
-              desiredStatus
-              status
-              passingCheckCount
-              totalCheckCount
-              warningCheckCount
-              criticalCheckCount
-              restarts
-              createdAt
-            }
+          }
+          allocations {
+            id
+            region
+            taskName
+            version
+            desiredStatus
+            status
+            passingCheckCount
+            totalCheckCount
+            warningCheckCount
+            criticalCheckCount
+            restarts
+            createdAt
           }
         }
       }

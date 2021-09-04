@@ -186,6 +186,7 @@
             <h2 class="text-lg leading-6 font-medium text-gray-900">
               Deployment Status
             </h2>
+            <p><%= @app["deploymentStatus"]["id"] %></p>
           </div>
           <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
             <div class="sm:col-span-2">
@@ -227,7 +228,7 @@
                             </tr>
                           </thead>
                           <tbody class="bg-white divide-y divide-gray-200">
-                            <%= for allocation <- @app["deploymentStatus"]["allocations"] do %>
+                            <%= for allocation <- @app["allocations"] do %>
                               <tr>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                   <%= allocation["id"] %>
