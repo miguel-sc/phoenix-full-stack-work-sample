@@ -182,18 +182,20 @@
       </div>
       <section>
         <div class="bg-white max-w-3xl lg:max-w-7xl px-4 sm:px-6 lg:px-8 mx-auto">
-          <div class="py-5">
-            <h2 class="text-lg leading-6 font-medium text-gray-900 py-5">
-              Deployment Status
-            </h2>
-            <div>
-              <p class="text-gray-900">ID: <%= @app["deploymentStatus"]["id"] %></p>
-              <p class="text-gray-900">Version: <%= @app["deploymentStatus"]["version"] %></p>
-              <p class="text-gray-900">Status: <%= @app["deploymentStatus"]["status"] %></p>
-              <p class="text-gray-900">Description: <%= @app["deploymentStatus"]["description"] %></p>
-              <p class="text-gray-900">Instances: <%= instances_count(@app["deploymentStatus"]) %></p>
+          <%= if @app["deploymentStatus"] do %>
+            <div class="py-5">
+              <h2 class="text-lg leading-6 font-medium text-gray-900 py-5">
+                Deployment Status
+              </h2>
+              <div>
+                <p class="text-gray-900">ID: <%= @app["deploymentStatus"]["id"] %></p>
+                <p class="text-gray-900">Version: <%= @app["deploymentStatus"]["version"] %></p>
+                <p class="text-gray-900">Status: <%= @app["deploymentStatus"]["status"] %></p>
+                <p class="text-gray-900">Description: <%= @app["deploymentStatus"]["description"] %></p>
+                <p class="text-gray-900">Instances: <%= instances_count(@app["deploymentStatus"]) %></p>
+              </div>
             </div>
-          </div>
+          <% end %>
           <div class="py-5">
             <h2 class="text-lg leading-6 font-medium text-gray-900">
               Instances
