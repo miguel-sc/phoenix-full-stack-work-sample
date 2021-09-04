@@ -21,7 +21,7 @@ defmodule FlyWeb.AppLive.Show do
 
     # Only make the API call if the websocket is setup. Not on initial render.
     if connected?(socket) do
-      Process.send_after(self(), :tick, @polling_interval)
+      Process.send_after(self(), :poll_app, @polling_interval)
       {:ok, fetch_app(socket)}
     else
       {:ok, socket}
@@ -55,8 +55,8 @@ defmodule FlyWeb.AppLive.Show do
   end
 
   @impl true
-  def handle_info(:tick, socket) do
-    Process.send_after(self(), :tick, @polling_interval)
+  def handle_info(:poll_app, socket) do
+    Process.send_after(self(), :poll_app, @polling_interval)
 
     {:noreply, fetch_app(socket)}
   end
