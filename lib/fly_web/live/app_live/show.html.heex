@@ -183,10 +183,21 @@
       <section>
         <div class="bg-white max-w-3xl lg:max-w-7xl px-4 sm:px-6 lg:px-8 mx-auto">
           <div class="py-5">
-            <h2 class="text-lg leading-6 font-medium text-gray-900">
+            <h2 class="text-lg leading-6 font-medium text-gray-900 py-5">
               Deployment Status
             </h2>
-            <p><%= @app["deploymentStatus"]["id"] %></p>
+            <div>
+              <p class="text-gray-900">ID: <%= @app["deploymentStatus"]["id"] %></p>
+              <p class="text-gray-900">Version: <%= @app["deploymentStatus"]["version"] %></p>
+              <p class="text-gray-900">Status: <%= @app["deploymentStatus"]["status"] %></p>
+              <p class="text-gray-900">Description: <%= @app["deploymentStatus"]["description"] %></p>
+              <p class="text-gray-900">Instances: <%= instances_count(@app["deploymentStatus"]) %></p>
+            </div>
+          </div>
+          <div class="py-5">
+            <h2 class="text-lg leading-6 font-medium text-gray-900">
+              Instances
+            </h2>
           </div>
           <div class="border-t border-gray-200 py-5">
             <div class="sm:col-span-2">
@@ -249,7 +260,7 @@
                                   <%= allocation["status"] %>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                  <%= health_checks(allocation) %>
+                                  <%= health_checks_count(allocation) %>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                   <%= allocation["restarts"] %>

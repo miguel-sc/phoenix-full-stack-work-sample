@@ -81,10 +81,17 @@ defmodule FlyWeb.AppLive.Show do
     "https://#{app["name"]}.fly.dev"
   end
 
-  def health_checks(allocation) do
+  def health_checks_count(allocation) do
     ["total", "passing", "warning", "critical"]
     |> Enum.filter(fn stat -> allocation["#{stat}CheckCount"] != 0 end)
     |> Enum.map(fn stat -> "#{allocation["#{stat}CheckCount"]} #{stat}" end)
+    |> Enum.join(", ")
+  end
+
+  def instances_count(deploymentStatus) do
+    ["desired", "placed", "healthy", "unhealthy"]
+    |> Enum.filter(fn stat -> deploymentStatus["#{stat}Count"] != 0 end)
+    |> Enum.map(fn stat -> "#{deploymentStatus["#{stat}Count"]} #{stat}" end)
     |> Enum.join(", ")
   end
 
