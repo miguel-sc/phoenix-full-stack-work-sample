@@ -5,6 +5,8 @@ defmodule FlyWeb.AppLive.Show do
   alias Fly.Client
   alias FlyWeb.Components.HeaderBreadcrumbs
 
+  @polling_interval 5000
+
   @impl true
   def mount(%{"name" => name}, session, socket) do
     socket =
@@ -19,6 +21,7 @@ defmodule FlyWeb.AppLive.Show do
 
     # Only make the API call if the websocket is setup. Not on initial render.
     if connected?(socket) do
+      Process.send_after(self(), :poll_app, @polling_interval)
       {:ok, fetch_app(socket)}
     else
       {:ok, socket}
@@ -51,6 +54,13 @@ defmodule FlyWeb.AppLive.Show do
     {:noreply, assign(socket, count: socket.assigns.count + 1)}
   end
 
+  @impl true
+  def handle_info(:poll_app, socket) do
+    Process.send_after(self(), :poll_app, @polling_interval)
+
+    {:noreply, fetch_app(socket)}
+  end
+
   def status_bg_color(app) do
     case app["status"] do
       "running" -> "bg-green-100"
@@ -69,5 +79,25 @@ defmodule FlyWeb.AppLive.Show do
 
   def preview_url(app) do
     "https://#{app["name"]}.fly.dev"
+  end
+
+  def health_checks_count(allocation) do
+    ["total", "passing", "warning", "critical"]
+    |> Enum.filter(fn stat -> allocation["#{stat}CheckCount"] != 0 end)
+    |> Enum.map(fn stat -> "#{allocation["#{stat}CheckCount"]} #{stat}" end)
+    |> Enum.join(", ")
+  end
+
+  def instances_count(deploymentStatus) do
+    ["desired", "placed", "healthy", "unhealthy"]
+    |> Enum.filter(fn stat -> deploymentStatus["#{stat}Count"] != 0 end)
+    |> Enum.map(fn stat -> "#{deploymentStatus["#{stat}Count"]} #{stat}" end)
+    |> Enum.join(", ")
+  end
+
+  def formatted_date(date_str) do
+    date_str
+    |> Timex.parse!("{ISO:Extended}")
+    |> Timex.format!("{relative}", :relative)
   end
 end

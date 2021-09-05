@@ -180,6 +180,109 @@
           </div>
         </section>
       </div>
+      <section>
+        <div class="bg-white max-w-3xl lg:max-w-7xl px-4 sm:px-6 lg:px-8 mx-auto">
+          <%= if @app["deploymentStatus"] do %>
+            <div class="py-5">
+              <h2 class="text-lg leading-6 font-medium text-gray-900 py-5">
+                Deployment Status
+              </h2>
+              <div>
+                <p class="text-gray-900">ID: <%= @app["deploymentStatus"]["id"] %></p>
+                <p class="text-gray-900">Version: <%= @app["deploymentStatus"]["version"] %></p>
+                <p class="text-gray-900">Status: <%= @app["deploymentStatus"]["status"] %></p>
+                <p class="text-gray-900">Description: <%= @app["deploymentStatus"]["description"] %></p>
+                <p class="text-gray-900">Instances: <%= instances_count(@app["deploymentStatus"]) %></p>
+              </div>
+            </div>
+          <% end %>
+          <div class="py-5">
+            <h2 class="text-lg leading-6 font-medium text-gray-900">
+              Instances
+            </h2>
+          </div>
+          <div class="border-t border-gray-200 py-5">
+            <div class="sm:col-span-2">
+              <dd class="mt-1 text-sm text-gray-900">
+                <div class="flex flex-col">
+                  <div class="-my-2 overflow-x-auto">
+                    <div class="py-2 align-middle inline-block min-w-full">
+                      <div class="overflow-hidden border-b border-gray-200">
+                        <table class="min-w-full divide-y divide-gray-200">
+                          <thead class="bg-gray-50">
+                            <tr>
+                              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                ID
+                              </th>
+                              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Task
+                              </th>
+                              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Version
+                              </th>
+                              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Region
+                              </th>
+                              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Desired
+                              </th>
+                              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Status
+                              </th>
+                              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Health Checks
+                              </th>
+                              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Restarts
+                              </th>
+                              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Created
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody class="bg-white divide-y divide-gray-200">
+                            <%= for allocation <- @app["allocations"] do %>
+                              <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                  <%= String.slice(allocation["id"], 0, 8) %>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                  <%= allocation["taskName"] %>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                  <%= allocation["version"] %>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                  <%= allocation["region"] %>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                  <%= allocation["desiredStatus"] %>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                  <%= allocation["status"] %>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                  <%= health_checks_count(allocation) %>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                  <%= allocation["restarts"] %>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                  <%= formatted_date(allocation["createdAt"]) %>
+                                </td>
+                              </tr>
+                            <% end %>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </dd>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
   <% end %>
 </div>
