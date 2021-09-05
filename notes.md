@@ -1,5 +1,13 @@
 # Notes
 
+This is a short summary of the project. I completed the challenge and hope I
+implemented everything as expected. The Readme file was great and the tips and
+tricks section was really helpful. It made the challenge a cool and fun learning
+experience. I also really enjoyed the experience of deploying my first app with
+Fly.
+
+Deployed app: https://polished-moon-1017.fly.dev/
+
 ## What I've built and what I didn't build
 
 I added the missing fields from the `deploymentStatus` and `allocations` to the
