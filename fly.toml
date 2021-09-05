@@ -1,6 +1,6 @@
-# fly.toml file generated for flyio-ui-ex on 2021-08-26T16:42:20-05:00
+# fly.toml file generated for polished-moon-1017 on 2021-09-05T12:01:38+02:00
 
-app = "flyio-ui-ex"
+app = "polished-moon-1017"
 
 kill_signal = "SIGTERM"
 kill_timeout = 5
